@@ -1,0 +1,22 @@
+.navMenuContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+}
+.navs {
+   display: flex;
+   gap: 20px;
+}
+.navs li {
+    display: inline;
+}
+.navigationLinks {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+span {
+    font-size: 2rem;
+}
