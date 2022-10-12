@@ -1,0 +1,25 @@
+.navMenuContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+}
+.navs {
+   display: flex;
+   gap: 20px;
+}
+.navs li {
+    display: inline;
+}
+.navigationLinks {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+span {
+    font-size: 2rem;
+}
+@media only screen and (max-width: 767px) {
+    
+}

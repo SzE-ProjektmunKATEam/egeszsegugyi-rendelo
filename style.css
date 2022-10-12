@@ -1,0 +1,10 @@
+:root {
+    --primary: #1977CC;
+}
+
+.jumbotron {
+    background: url("hero-bg.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+}
