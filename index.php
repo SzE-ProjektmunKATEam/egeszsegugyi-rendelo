@@ -14,7 +14,7 @@
     <div class="container-md">
       <div id="navPlaceholder"></div>
     </div>
-    <div id="hero">
+    <div id="hero" style="height: 50vh;">
     </div>
   </div>
 <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>

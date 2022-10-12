@@ -2,22 +2,11 @@
     --primary: #1977CC;
 }
 
-button {
-    background-color: var(--primary);
-    border: 0;
-    border-radius: 20px;
-    color: white;
-    padding: 10px 30px;
-}
-
-#hero {
+.jumbotron {
     background: url("hero-bg.jpg");
-    height: 90vh;
-    width: 100%;
     background-repeat: no-repeat;
-    background-attachment: fixed;
-    display: flex;
-    align-items: center;
+    background-size: cover;
+    width: 100%;
 }
 #hero .container {
     margin-bottom: 200px;
