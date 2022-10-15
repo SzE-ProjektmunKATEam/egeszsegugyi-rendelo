@@ -14,7 +14,7 @@ return header('Location: /login.php?message=notLoggedIn');
 <body>
     <h1><?php echo "Hello Again!" ?></h1>
     <form action="logoutProcess.php" method="POST">
-        <input type="submit" value="Kilépés">
+        <input type="submit" value="Kilépésgit ">
     </form>
 </body>
 </html>
