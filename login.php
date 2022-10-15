@@ -26,6 +26,9 @@ if($_SESSION['logged_in'] == "logged")  return header('Location: /admin.php');
               name="password">
             </div>
             <button type="submit" class="btn btn-primary w-100 w-lg-25">Bejelentkezés</button>
+            <div class="form-group pt-2">
+            <a href="/">Vissza a főoldalra</a>
+            </div>
           </form>
     </div>
 </body>
