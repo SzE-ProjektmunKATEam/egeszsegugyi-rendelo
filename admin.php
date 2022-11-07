@@ -3,6 +3,13 @@ session_start();
 if(!$_SESSION['logged_in'] == "logged")
 return header('Location: /login.php?message=notLoggedIn');
 require_once('mockdataBase.php');
+require_once 'connect.php';
+$stmt = $conn->query("SELECT * FROM news");
+$count_array = $conn->query("SELECT * FROM news");
+$news_array = array();
+while ($row = $count_array->fetch()) {
+  $news_array[] = $row['id'];
+}
 ?>
 <!DOCTYPE html>
 <html lang="hu">
@@ -25,7 +32,8 @@ require_once('mockdataBase.php');
           <a class="nav-link" href="/admin.php">Vezérlőpult<span class="sr-only">(current)</span></a>
         </li>
       </ul>
-      <a href="login.php" type="button" class="btn btn-primary d-none d-md-block ml-3 px-4 rounded-pill">Új hír létrehozása</a>
+      <?php $created_id = count($news_array) + 1  ?>
+      <a href='<?php echo "edit.php?id=${created_id}" ?>' type="button" class="btn btn-primary d-none d-md-block ml-3 px-4 rounded-pill">Új hír létrehozása</a>
       <form action="logoutProcess.php" method="POST">
         <input class="btn btn-danger d-none d-md-block ml-3 px-4 rounded-pill" type="submit" value="Kilépés">
     </form>
@@ -35,12 +43,13 @@ require_once('mockdataBase.php');
         <div class="bg-white w-25 shadow-sm p-3 rounded ">
             <h2 class="pb-1">Hírek</h2>
             <hr>
-        <?php foreach ($testArray as $element) { ?>
+        <?php 
+        while ($row = $stmt->fetch()) { ?>
             <div class="card mb-3">
                 <div class="card-body">
-                    <h5 class="card-title"><?php echo $element['title']?></h5>
-                    <p class="card-text"><?php echo $element['date']?></p>
-                    <?php $id = $element['id']?>
+                    <h5 class="card-title"><?php echo $row['title']; ?></h5>
+                    <p class="card-text"><?php echo $row['created']?></p>
+                    <?php $id = $row['id']?>
                     <a href='<?php echo "/edit.php?id={$id}" ?>' class="btn btn-primary">Szerkeztés</a>
                 </div>
           </div> 

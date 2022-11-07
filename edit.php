@@ -3,16 +3,38 @@ session_start();
 if(!$_SESSION['logged_in'] == "logged")
 return header('Location: /login.php?message=notLoggedIn');
 require_once('mockdataBase.php');
+require_once 'connect.php';
 
 $id = $_GET['id'];
 echo "<script src='https://code.jquery.com/jquery-3.3.1.slim.min.js' integrity='sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo' crossorigin='anonymous'></script>";
-if($_POST['content']) { echo "<script>jQuery(document).ready(function() {
+if(isset($_POST['content'])) {
+if($_POST['content']) {
+  echo "<script>jQuery(document).ready(function() {
   jQuery('.alert').removeClass('d-none')
  jQuery('.alert').addClass('d-block') 
 })</script>";
-$testArray[$id]['title'] = $_POST['title'];
-$testArray[$id]['content'] = $_POST['content'];
+$sql = "UPDATE news SET content=? WHERE id=?";
+$conn->prepare($sql)->execute([$_POST['content'], $id]);
+if(isset($_POST['title'])) {
+  $sql = "UPDATE news SET title=? WHERE id=?";
+$conn->prepare($sql)->execute([$_POST['title'], $id]);
 }
+}
+}
+$title = "";
+$content = "";
+$stmt = $conn->query("SELECT * FROM news WHERE id=$id");
+if($stmt->rowCount() > 0)
+{
+        while ($row = $stmt->fetch()) {
+          $title = $row['title'];
+          $content = $row['content'];
+        }
+      } else {
+          $query = "INSERT INTO news (title, owner, content, id) VALUES (?,?,?,?)";
+          $var = $conn->prepare($query);
+          $var->execute([$title, $_SESSION['user_id'], $content, $id]);
+      }
 ?>
 <!DOCTYPE html>
 <html lang="hu">
@@ -37,8 +59,7 @@ $testArray[$id]['content'] = $_POST['content'];
           <a class="nav-link" href="/admin.php">Vezérlőpult<span class="sr-only">(current)</span></a>
         </li>
       </ul>
-      <a href="login.php" type="button" class="btn btn-primary d-none d-md-block ml-3 px-4 rounded-pill">Új hír létrehozása</a>
-      <form action="logoutProcess.php" method="POST">
+      <form action="logoutProcess.php" method="POST" class="m-0">
         <input class="btn btn-danger d-none d-md-block ml-3 px-4 rounded-pill" type="submit" value="Kilépés">
     </form>
     </div>
@@ -53,11 +74,11 @@ $testArray[$id]['content'] = $_POST['content'];
             <div class="form-group">
                 <label for="exampleInputEmail1" class="font-weight-bold">Cím</label>
                 <input type="text" class="form-control" id="title" 
-                name="title" aria-describedby="titleHelp" placeholder="Cím" value="<?php echo $testArray[$id]['title']?>" required>
+                name="title" aria-describedby="titleHelp" placeholder="Cím" value="<?php echo $title ?>" required>
               </div>
             <div class="form-group">
             <textarea id="summernote" name="content" required>
-              <?php echo $testArray[$id]['content']?>
+              <?php echo $content?>
             </textarea>
             </div>
             <button type="submit" class="btn btn-primary w-100 w-lg-25">Mentés</button>
