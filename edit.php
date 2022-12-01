@@ -30,7 +30,7 @@ if($stmt->rowCount() > 0)
           $title = $row['title'];
           $content = $row['content'];
         }
-      } else {
+      } else if(isset($_POST["content"])) {
           $query = "INSERT INTO news (title, owner, content, id) VALUES (?,?,?,?)";
           $var = $conn->prepare($query);
           $var->execute([$title, $_SESSION['user_id'], $content, $id]);

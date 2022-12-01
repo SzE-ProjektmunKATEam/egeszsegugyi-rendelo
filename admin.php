@@ -10,6 +10,14 @@ $news_array = array();
 while ($row = $count_array->fetch()) {
   $news_array[] = $row['id'];
 }
+if(isset($_GET["deletepost"]))
+{
+  $post_id_to_delete = $_GET["deletepost"];
+  $sql = "DELETE FROM news WHERE id=?";
+  $stmt= $conn->prepare($sql);
+  $stmt->execute([$post_id_to_delete]);
+  return header('Location: /admin.php');
+}
 ?>
 <!DOCTYPE html>
 <html lang="hu">
@@ -22,7 +30,7 @@ while ($row = $count_array->fetch()) {
 </head>
 <body class="bg-light">
 <nav class="navbar navbar-expand-md navbar-light bg-white p-3">
-    <a class="navbar-brand" href="/admin.php">Egészségügyi Rendelő</a>
+    <a class="navbar-brand" href="/index.php">Egészségügyi Rendelő</a>
     <button class="navbar-toggler border-0" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon" style="width: 1em;"></span>
     </button>
@@ -32,7 +40,9 @@ while ($row = $count_array->fetch()) {
           <a class="nav-link" href="/admin.php">Vezérlőpult<span class="sr-only">(current)</span></a>
         </li>
       </ul>
-      <?php $created_id = count($news_array) + 1  ?>
+      <?php 
+      $last_item = end($news_array);
+      $created_id = $last_item + 1; ?>
       <a href='<?php echo "edit.php?id=${created_id}" ?>' type="button" class="btn btn-primary d-none d-md-block ml-3 px-4 rounded-pill">Új hír létrehozása</a>
       <form action="logoutProcess.php" method="POST">
         <input class="btn btn-danger d-none d-md-block ml-3 px-4 rounded-pill" type="submit" value="Kilépés">
@@ -51,6 +61,7 @@ while ($row = $count_array->fetch()) {
                     <p class="card-text"><?php echo $row['created']?></p>
                     <?php $id = $row['id']?>
                     <a href='<?php echo "/edit.php?id={$id}" ?>' class="btn btn-primary">Szerkeztés</a>
+                    <a href='<?php echo "/admin.php?deletepost={$id}" ?>' class="btn btn-danger">Törlés</a>
                 </div>
           </div> 
   <?php } ?>
