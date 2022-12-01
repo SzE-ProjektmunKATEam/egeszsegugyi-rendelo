@@ -6,35 +6,35 @@ require_once('mockdataBase.php');
 require_once 'connect.php';
 
 $id = $_GET['id'];
+$title = "";
+$content = "";
 echo "<script src='https://code.jquery.com/jquery-3.3.1.slim.min.js' integrity='sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo' crossorigin='anonymous'></script>";
-if(isset($_POST['content'])) {
-if($_POST['content']) {
+if(isset($_POST['content']) && isset($_GET['updated'])) {
   echo "<script>jQuery(document).ready(function() {
   jQuery('.alert').removeClass('d-none')
  jQuery('.alert').addClass('d-block') 
 })</script>";
 $sql = "UPDATE news SET content=? WHERE id=?";
+$title = $_POST['title'];
+$content = $_POST['content'];
 $conn->prepare($sql)->execute([$_POST['content'], $id]);
 if(isset($_POST['title'])) {
   $sql = "UPDATE news SET title=? WHERE id=?";
 $conn->prepare($sql)->execute([$_POST['title'], $id]);
 }
 }
-}
-$title = "";
-$content = "";
-$stmt = $conn->query("SELECT * FROM news WHERE id=$id");
+$stmt = $conn->query("SELECT * FROM news WHERE id={$id}");
 if($stmt->rowCount() > 0)
 {
         while ($row = $stmt->fetch()) {
           $title = $row['title'];
           $content = $row['content'];
         }
-      } else if(isset($_POST["content"])) {
+  } else if(isset($_GET['updated'])){
           $query = "INSERT INTO news (title, owner, content, id) VALUES (?,?,?,?)";
           $var = $conn->prepare($query);
           $var->execute([$title, $_SESSION['user_id'], $content, $id]);
-      }
+  }
 ?>
 <!DOCTYPE html>
 <html lang="hu">
@@ -69,7 +69,7 @@ if($stmt->rowCount() > 0)
   <div class="alert alert-primary d-none" role="alert">
  Cikk frissítve!
 </div>
-    <form class="pt-5 container" action='<?php echo "/edit.php?id={$id}" ?>' method="POST">
+    <form class="pt-5 container" action='<?php echo "/edit.php?id={$id}&updated=true" ?>' method="POST">
         <h1 id="loginHeading">Cikk szerkesztése</h1>
             <div class="form-group">
                 <label for="exampleInputEmail1" class="font-weight-bold">Cím</label>
