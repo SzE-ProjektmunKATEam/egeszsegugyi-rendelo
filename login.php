@@ -16,16 +16,30 @@ if($_SESSION['logged_in'] == "logged")  return header('Location: /admin.php');
 <body>
     <div class="loginWrapper">
     <form class="p-5 container" action="loginProcess.php" method="POST">
+      <?php if(isset($_GET['message'])) {
+        $message = $_GET['message']; ?>
+    <div class="alert alert-info" role="alert">
+  <?php switch($message) {
+   case "loggedout":
+    echo "Sikeres kijelentkezés!";
+    break;
+    case "notMatched":
+      echo "Hibás e-mail vagy jelszó!";
+      break;
+      default:
+      echo "Valami hiba történt!";
+  }?>
+</div> <?php }?>
         <h1 id="loginHeading">Bejelentkezés</h1>
             <div class="form-group">
                 <label for="exampleInputEmail1" class="font-weight-bold">Email cím</label>
                 <input type="email" class="form-control" id="exampleInputEmail1" 
-                name="email" aria-describedby="emailHelp" placeholder="Email cím">
+                name="email" aria-describedby="emailHelp" placeholder="Email cím" required>
               </div>
             <div class="form-group">
               <label for="exampleInputPassword1" class="font-weight-bold">Jelszó</label>
               <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Jelszó"
-              name="password">
+              name="password" required>
             </div>
             <button type="submit" class="btn btn-primary w-100 w-lg-25">Bejelentkezés</button>
             <div class="form-group pt-2">
