@@ -45,7 +45,7 @@ if($stmt->rowCount() > 0)
      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
      <link rel="stylesheet" href="/summernote/summernote-bs4.css">
      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
-<title>Admin Panel</title>
+     <title>Admin Panel</title>
 </head>
 <body class="bg-light">
 <nav class="navbar navbar-expand-md navbar-light bg-white p-3">

@@ -25,8 +25,11 @@ if(isset($_GET["deletepost"]))
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-    <title>Admin Panel</title>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script> 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
 </head>
 <body class="bg-light">
 <nav class="navbar navbar-expand-md navbar-light bg-white p-3">
@@ -37,7 +40,10 @@ if(isset($_GET["deletepost"]))
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item active">
-          <a class="nav-link" href="/admin.php">Vezérlőpult<span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="/admin.php">Vezérlőpult<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+        <a class="nav-link" href="/decks.php">Bejelentések<span class="sr-only">(current)</span></a>
         </li>
       </ul>
       <?php 
@@ -50,7 +56,7 @@ if(isset($_GET["deletepost"]))
     </div>
   </nav>
     <div class="container-fluid p-3 d-flex">
-        <div class="bg-white w-25 shadow-sm p-3 rounded ">
+        <div class="bg-white w-25 shadow-sm p-3 rounded" id="parent">
             <h2 class="pb-1">Hírek</h2>
             <hr>
         <?php 

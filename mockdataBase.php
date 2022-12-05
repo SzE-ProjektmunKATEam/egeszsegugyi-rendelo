@@ -20,4 +20,16 @@ $testArray = array(
         "content" => "Valami content"
     ),
 );
+$cardArray = array(
+    array(
+        "id" => 0,
+        "name" => "Teszt Cím 1",
+        "deck" => 0
+    ),
+    array(
+        "id" => 1,
+        "name" => "Teszt Cím 2",
+        "deck" => 1
+    )
+);
 ?>
