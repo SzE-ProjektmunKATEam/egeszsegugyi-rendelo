@@ -13,11 +13,11 @@ if(isset($_POST['taj']) && isset($_POST['description'])) {
         $taj_exist = true;
         if($row['taj'] !== intval($_POST['taj'])) $taj_exist = false;
     }
-    $owner_id = intval($conn->lastInsertId());
     if(!$taj_exist) {
         $query = "INSERT INTO user (first_name, last_name, taj, worker) VALUES (?,?,?,?)";
         $var = $conn->prepare($query);
         $var->execute([$_POST['first_name'], $_POST['last_name'], intval($_POST['taj']), 0]);
+        $owner_id = intval($conn->lastInsertId());
     } else {
         $taj = $_POST['taj'];
         $user_by_taj = $conn->query("SELECT * FROM user WHERE taj=$taj ORDER BY id DESC LIMIT 1");
@@ -27,7 +27,7 @@ if(isset($_POST['taj']) && isset($_POST['description'])) {
         }
     }
 
-
+    echo $owner_id;
     $full_name = $_POST['first_name'] . " " . $_POST['last_name'];
 
     $query = "INSERT INTO card (id, name, description, deck, status, owner) VALUES (?,?,?,?,?,?)";
