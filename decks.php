@@ -4,6 +4,16 @@ if(!$_SESSION['logged_in'] == "logged")
 return header('Location: /login.php?message=notLoggedIn');
 require_once('mockdataBase.php');
 require_once 'connect.php';
+
+if(isset($_GET["deletecard"]))
+{
+  $card_id_to_delete = $_GET["deletecard"];
+  $sql = "DELETE FROM card WHERE id=?";
+  $stmt= $conn->prepare($sql);
+  $stmt->execute([$card_id_to_delete]);
+  return header('Location: /decks.php');
+}
+
 $key = 0;
 $card_copy = array();
 if(isset($_GET["statusChange"])) {
@@ -65,11 +75,9 @@ while ($row = $card_array_query->fetch()) {
     <div class="card mb-3">
     <form class="p-3" method="GET" id="<?php echo "name". $row["id"]?>">
             <div class="form-group">
-            <?php echo $row['name']; ?>
-                <label for="exampleInputEmail1" class="font-weight-600"><b>Név: </b>Valami név</label>
+                <label for="exampleInputEmail1" class="font-weight-600"><b>Név: </b><?php echo $row['name']; ?></label>
                 <hr>
-                <small id="emailHelp" class="form-text"><b>Taj: </b>201-146-468</small>
-                <small id="emailHelp" class="form-text"><b>Dátum: </b>2022-12-01</small>
+                <small id="emailHelp" class="form-text"><b>Dátum: </b><?php echo $row['created']?></small>
             </div>
                 <div class="form-group">
                     <select class="form-control" onchange="this.form.submit()" name="statusChange">
@@ -79,8 +87,8 @@ while ($row = $card_array_query->fetch()) {
                     <option value="4">Lezárt</option>
                     </select>
                     <a href='<?php echo "/edit-card.php?id={$row['id']}" ?>' class="btn btn-primary mt-2">Szerkeztés</a>
+                    <a href='<?php echo "/decks.php?deletecard={$row['id']}" ?>' class="btn btn-danger mt-2">Törlés</a>
                 </div>
-                <?php echo $row["id"]; ?>
                 <input type="hidden" value="<?php echo $row['id'] ?>" name="cardID">
         </form> 
     </div>
@@ -94,11 +102,9 @@ while ($row = $card_array_query->fetch()) {
     <div class="card mb-3">
     <form class="p-3" method="GET" id="<?php echo "name". $row["id"]?>">
             <div class="form-group">
-                <?php echo $row['name']; ?>
-                <label for="exampleInputEmail1" class="font-weight-600  "><b>Név: </b>Valami név</label>
+                <label for="exampleInputEmail1" class="font-weight-600"><b>Név: </b><?php echo $row['name']; ?></label>
                 <hr>
-                <small id="emailHelp" class="form-text"><b>Taj: </b>201-146-468</small>
-                <small id="emailHelp" class="form-text"><b>Dátum: </b>2022-12-01</small>
+                <small id="emailHelp" class="form-text"><b>Dátum: </b><?php echo $row['created']?></small>
             </div>
                 <div class="form-group">
                     <select class="form-control" onchange="this.form.submit()" name="statusChange">
@@ -108,8 +114,8 @@ while ($row = $card_array_query->fetch()) {
                     <option value="4">Lezárt</option>
                     </select>
                     <a href='<?php echo "/edit-card.php?id={$row['id']}" ?>' class="btn btn-primary mt-2">Szerkeztés</a>
+                    <a href='<?php echo "/decks.php?deletecard={$row['id']}" ?>' class="btn btn-danger mt-2">Törlés</a>
                 </div>
-                <?php echo $row["id"]; ?>
                 <input type="hidden" value="<?php echo $row['id'] ?>" name="cardID">
         </form> 
     </div>
@@ -123,11 +129,9 @@ while ($row = $card_array_query->fetch()) {
     <div class="card mb-3">
     <form class="p-3" method="GET" id="<?php echo "name". $row["id"]?>">
             <div class="form-group">
-                <?php echo $row['name']; ?>
-                <label for="exampleInputEmail1" class="font-weight-600  "><b>Név: </b>Valami név</label>
+            <label for="exampleInputEmail1" class="font-weight-600"><b>Név: </b><?php echo $row['name']; ?></label>
                 <hr>
-                <small id="emailHelp" class="form-text"><b>Taj: </b>201-146-468</small>
-                <small id="emailHelp" class="form-text"><b>Dátum: </b>2022-12-01</small>
+                <small id="emailHelp" class="form-text"><b>Dátum: </b><?php echo $row['created']?></small>
             </div>
                 <div class="form-group">
                     <select class="form-control" onchange="this.form.submit()" name="statusChange">
@@ -137,8 +141,8 @@ while ($row = $card_array_query->fetch()) {
                     <option value="4">Lezárt</option>
                     </select>
                     <a href='<?php echo "/edit-card.php?id={$row['id']}" ?>' class="btn btn-primary mt-2">Szerkeztés</a>
+                    <a href='<?php echo "/decks.php?deletecard={$row['id']}" ?>' class="btn btn-danger mt-2">Törlés</a>
                 </div>
-                <?php echo $row["id"]; ?>
                 <input type="hidden" value="<?php echo $row['id'] ?>" name="cardID">
         </form> 
     </div>
@@ -152,11 +156,9 @@ while ($row = $card_array_query->fetch()) {
     <div class="card mb-3">
     <form class="p-3" method="GET" id="<?php echo "name". $row["id"]?>">
             <div class="form-group">
-                <?php echo $row['name']; ?>
-                <label for="exampleInputEmail1" class="font-weight-600  "><b>Név: </b>Valami név</label>
+            <label for="exampleInputEmail1" class="font-weight-600"><b>Név: </b><?php echo $row['name']; ?></label>
                 <hr>
-                <small id="emailHelp" class="form-text"><b>Taj: </b>201-146-468</small>
-                <small id="emailHelp" class="form-text"><b>Dátum: </b>2022-12-01</small>
+                <small id="emailHelp" class="form-text"><b>Dátum: </b><?php echo $row['created']?></small>
             </div>
                 <div class="form-group">
                     <select class="form-control" onchange="this.form.submit()" name="statusChange">
@@ -166,8 +168,8 @@ while ($row = $card_array_query->fetch()) {
                     <option value="4" selected>Lezárt</option>
                     </select>
                     <a href='<?php echo "/edit-card.php?id={$row['id']}" ?>' class="btn btn-primary mt-2">Szerkeztés</a>
+                    <a href='<?php echo "/decks.php?deletecard={$row['id']}" ?>' class="btn btn-danger mt-2">Törlés</a>
                 </div>
-                <?php echo $row["id"]; ?>
                 <input type="hidden" value="<?php echo $row['id'] ?>" name="cardID">
         </form> 
     </div>

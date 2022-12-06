@@ -4,6 +4,15 @@ if(!$_SESSION['logged_in'] == "logged")
 return header('Location: /login.php?message=notLoggedIn');
 require_once('mockdataBase.php');
 require_once 'connect.php';
+
+$user_id = $_SESSION['user_id'];
+$is_admin = false;
+$user_query = $conn->query("SELECT * FROM user WHERE id=$user_id");
+while($row = $user_query->fetch())
+{
+  if($row["worker"] == 1) $is_admin = true;
+}
+
 $stmt = $conn->query("SELECT * FROM news");
 $count_array = $conn->query("SELECT * FROM news");
 $news_array = array();
@@ -39,6 +48,7 @@ if(isset($_GET["deletepost"]))
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ml-auto">
+      <?php if($is_admin) {?>
         <li class="nav-item active">
         <a class="nav-link" href="/admin.php">Vezérlőpult<span class="sr-only">(current)</span></a>
         </li>
@@ -50,11 +60,13 @@ if(isset($_GET["deletepost"]))
       $last_item = end($news_array);
       $created_id = $last_item + 1; ?>
       <a href='<?php echo "edit.php?id=${created_id}" ?>' type="button" class="btn btn-primary d-none d-md-block ml-3 px-4 rounded-pill">Új hír létrehozása</a>
+      <?php } ?>
       <form action="logoutProcess.php" method="POST">
         <input class="btn btn-danger d-none d-md-block ml-3 px-4 rounded-pill" type="submit" value="Kilépés">
     </form>
     </div>
   </nav>
+  <?php if($is_admin) {?>
     <div class="container-fluid p-3 d-flex">
         <div class="bg-white w-25 shadow-sm p-3 rounded" id="parent">
             <h2 class="pb-1">Hírek</h2>
@@ -70,7 +82,8 @@ if(isset($_GET["deletepost"]))
                     <a href='<?php echo "/admin.php?deletepost={$id}" ?>' class="btn btn-danger">Törlés</a>
                 </div>
           </div> 
-  <?php } ?>
+  <?php } 
+  }?>
         </div>
     </div>
 </body>

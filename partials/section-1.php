@@ -18,7 +18,6 @@ $stmt = $conn->query("SELECT * FROM news");
             <h2 class="display-4 mb-3">Adatok</h2>
             <ul class="list-group mb-3">
                 <li class="list-group-item">Cím: 2043 Budapest Kis utca 15/b</li>
-                <li class="list-group-item">Dapibus ac facilisis in</li>
               </ul>
         </div>
         <div class="col-sm-12 order-lg-3 col-lg-6">

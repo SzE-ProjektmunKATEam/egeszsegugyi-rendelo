@@ -7,14 +7,19 @@
     $givenUser = $_POST['email'];
     $giverPass = $_POST['password'];
 
+    $HashedPass = hash('sha512', $giverPass);
+
     $user_id = 0;
 
     $stmt = $conn->query("SELECT * FROM user");
     while ($row = $stmt->fetch()) {
       if($givenUser == $row['email']) $testUser = true;
-      if($giverPass == $row['password']) $testPass = true;
-      if( $testUser ||  $testPass)
+      if($HashedPass == $row['password']) $testPass = true;
+      if( $testUser && $testPass)
+      {
       $user_id = $row['id'];
+      break;
+      }
   }
 
     //check if user has login token
